@@ -42,15 +42,14 @@ qmk_setting_mouse_key_features = {
     'RGB_MATRIX_ENABLE': 'yes'
 }
 
-sed_cmd="sed -i 's/{feature} = \\w*/{feature} = {state}/' {model}/keymaps/vial/rules.mk"
+sed_cmd="sed -i 's/{feature} = \\w*/{feature} = {state}/' $rules_mk"
 
-grep_cmd="grep --color=never {feature} {model}/keymaps/vial/rules.mk"
+grep_cmd='grep --color=never "{feature}" $rules_mk'
 
-for model in ['nature']:
-    for features in [vanilla_features, qmk_setting_no_mouse_key_features, qmk_setting_mouse_key_features]:
-        for feature, state in features.items():
-            print(sed_cmd.format(model=model, feature=feature, state=state))
-        print()
-        for feature in features:
-            print(grep_cmd.format(model=model, feature=feature))
-        print('\n\n')
+for features in [vanilla_features, qmk_setting_no_mouse_key_features, qmk_setting_mouse_key_features]:
+    for feature, state in features.items():
+        print(sed_cmd.format(feature=feature, state=state))
+    print()
+
+for feature in vanilla_features:
+    print(grep_cmd.format(feature=feature))
