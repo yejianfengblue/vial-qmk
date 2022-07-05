@@ -1,20 +1,30 @@
 #!/bin/bash
 
-# This bash script sets different value in keyboards/xbows/{keyboard_model}/keymaps/vial/rules.mk and config.h
+# 1. Use 'sed' command to set different value in keyboards/xbows/{keyboard_model}/keymaps/vial/rules.mk and config.h
+#    to setup different QMK features and RGB effects
+# 2. Use 'qmk compile' to compile firmware
+# 3. Move firmware to directory 'xbows'
 # to compile vial firmware with different QMK features and RGB effects
 #
-# Before run this script, setup the QMK build environment https://docs.qmk.fm/#/newbs_getting_started
-# run 'qmk doctor' to check the build environment
+# Before run this script, setup the QMK build environment https://docs.qmk.fm/#/newbs_getting_started.
+# Run 'qmk doctor' to check the build environment
+
 
 main() {
 
+    # get qmk home, e.g., ~/vial-qmk
     qmk_home=$(qmk config user.qmk_home | cut -d'=' -f 2)
+    # expand ~/vial-qmk to /home/xxx/vial-qmk
     qmk_home=${qmk_home/#\~/$HOME}
     printf "QMK home directory is ${qmk_home}\n"
 
+    # make directory e.g. /home/xxx/vial-qmk/xbows to store hex files
     xbows_firmware_dir=$qmk_home/xbows
     mkdir -pv $xbows_firmware_dir
 
+    compile_vial_firmwares nature
+    compile_vial_firmwares knight
+    compile_vial_firmwares knight_plus
     compile_vial_firmwares numpad
 }
 
@@ -36,6 +46,7 @@ print_features() {
     # ignore the first match in the comment in config.h
     grep --color=never "#undef ENABLE_RGB_MATRIX_BAND_SPIRAL_VAL" $config_h | tail +2
 }
+
 
 compile_vanilla_vial() {
 
@@ -63,6 +74,7 @@ compile_vanilla_vial() {
     mv -v "${qmk_home}/.build/xbows_${kb}_vial.hex" "${xbows_firmware_dir}/xbows_${kb}_vial.hex"
 }
 
+
 compile_qmk_setting_no_mouse_key() {
 
     sed -i 's/GRAVE_ESC_ENABLE = \w*/GRAVE_ESC_ENABLE = yes/' $rules_mk
@@ -88,6 +100,7 @@ compile_qmk_setting_no_mouse_key() {
     printf "\n"
     mv -v "${qmk_home}/.build/xbows_${kb}_vial.hex" "${xbows_firmware_dir}/xbows_${kb}_vial_qmk-setting_no-mouse-key.hex"
 }
+
 
 compile_qmk_setting_mouse_key() {
 
@@ -121,6 +134,7 @@ compile_qmk_setting_mouse_key() {
     mv -v "${qmk_home}/.build/xbows_${kb}_vial.hex" "${xbows_firmware_dir}/xbows_${kb}_vial_qmk-setting_mouse-key.hex"
 }
 
+
 compile_numpad() {
 
     sed -i 's/GRAVE_ESC_ENABLE = \w*/GRAVE_ESC_ENABLE = yes/' $rules_mk
@@ -145,11 +159,13 @@ compile_numpad() {
     mv -v "${qmk_home}/.build/xbows_${kb}_vial.hex" "${xbows_firmware_dir}/xbows_${kb}_vial.hex"
 }
 
+
+# Compile firmware for one keyboard with various features
 compile_vial_firmwares() {
 
     if [ $# -eq 1 ]
     then
-        kb=$1  # nature, knight, knight_plus
+        kb=$1  # nature, knight, knight_plus, numpad
         kb_dir=$qmk_home/keyboards/xbows/$kb
         rules_mk=$kb_dir/keymaps/vial/rules.mk
         config_h=$kb_dir/keymaps/vial/config.h
@@ -167,8 +183,9 @@ compile_vial_firmwares() {
             compile_numpad
         fi
     else
-        printf "compile_vial_firmware nature/knight/knight_plus/numpad"
+        printf "Wrong argument. compile_vial_firmware nature/knight/knight_plus/numpad"
     fi
 }
+
 
 main "$@"
