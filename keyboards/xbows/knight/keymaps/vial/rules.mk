@@ -23,29 +23,29 @@ GRAVE_ESC_ENABLE = yes
 # N-key rollover
 # capable of reporting any number of key-presses at once rather than 6 keys by default
 # Disabling it frees 360 bytes
-NKRO_ENABLE = yes
+NKRO_ENABLE = no
 
 
 # Audio control and System control
 # Disabling it frees 380 bytes
-EXTRAKEY_ENABLE = yes
+EXTRAKEY_ENABLE = no
 
 
 # https://docs.qmk.fm/#/feature_space_cadet
 # Combine ctrl/shift/alt and () to one key, e.g., Left Shift when held, ( when tapped
 # Disabling it frees 380 bytes
-SPACE_CADET_ENABLE = yes
+SPACE_CADET_ENABLE = no
 
 
 # https://docs.qmk.fm/#/keycodes_magic
 # Disabling it frees 630 bytes
-MAGIC_ENABLE = yes
+MAGIC_ENABLE = no
 
 
 # https://docs.qmk.fm/#/feature_mouse_keys
 # Mouse keys
 # Disabling it frees 1350 bytes
-MOUSEKEY_ENABLE = yes
+MOUSEKEY_ENABLE = no
 
 
 # https://docs.qmk.fm/#/feature_key_overrides
@@ -61,7 +61,7 @@ KEY_OVERRIDE_ENABLE = no
 # - double tap sends Esc,
 # - tap+hold sends Alt"
 # Disabling it frees 2000 bytes
-TAP_DANCE_ENABLE = no
+TAP_DANCE_ENABLE = yes
 
 
 # https://docs.qmk.fm/#/feature_combo
@@ -75,7 +75,7 @@ COMBO_ENABLE = no
 # You can enable auto shift feature. E.g. press 2 longer than 200ms gives @
 # Enable it and go to Vial to see more features
 # Disabling it frees 3300 bytes
-QMK_SETTINGS = no
+QMK_SETTINGS = yes
 
 
 # set to no to disable RGB
