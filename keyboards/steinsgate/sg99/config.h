@@ -12,7 +12,8 @@
 #define SD1_RX_PAL_MODE 1
 
 #define LED_PIN_ON_STATE 1
-#define LED_CAPS_LOCK_PIN C15
+#define LED_CAPS_LOCK_PIN C13
+//#define LED_NUM_LOCK_PIN C14
 
 /*
  * Feature disable options

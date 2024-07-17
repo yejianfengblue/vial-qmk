@@ -25,3 +25,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
   return true;
 }
+
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  switch (get_highest_layer(state)) {
+  case 1:
+    gpio_write_pin_high(C14);
+    gpio_write_pin_low(C15);
+    gpio_write_pin_low(F0);
+    gpio_write_pin_low(F1);
+    break;
+  case 2:
+    gpio_write_pin_high(C15);
+    gpio_write_pin_high(C14);
+    gpio_write_pin_low(F0);
+    gpio_write_pin_low(F1);
+    break;
+  case 3:
+    gpio_write_pin_high(F0);
+    gpio_write_pin_high(C14);
+    gpio_write_pin_high(C15);
+    gpio_write_pin_low(F1);
+    break;
+  case 4:
+    gpio_write_pin_high(F1);
+    gpio_write_pin_high(C14);
+    gpio_write_pin_high(C15);
+    gpio_write_pin_high(F0);
+    break;
+  default:
+    gpio_write_pin_low(C14);
+    gpio_write_pin_low(C15);
+    gpio_write_pin_low(F0);
+    gpio_write_pin_low(F1);
+    break;
+  }
+  return state;
+}
