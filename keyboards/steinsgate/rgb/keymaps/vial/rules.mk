@@ -8,6 +8,6 @@ VIAL_INSECURE = yes
 VIALRGB_ENABLE = yes
 
 # link time optimization to reduce firmware size
-LTO_ENABLE = yes
+#LTO_ENABLE = yes
 
 
